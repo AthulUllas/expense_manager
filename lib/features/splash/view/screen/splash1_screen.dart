@@ -1,3 +1,5 @@
+import 'package:animations/animations.dart';
+import 'package:expense_manager/features/auth/view/screens/get_started_screen.dart';
 import 'package:expense_manager/features/splash/view/widgets/next_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
@@ -186,6 +188,27 @@ class Splash1Screen extends HookWidget {
                         onTap: () {
                           if (currentIndex.value < 2) {
                             currentIndex.value++;
+                          } else {
+                            Navigator.of(context).push(
+                              PageRouteBuilder(
+                                pageBuilder:
+                                    (context, animation, secondaryAnimation) =>
+                                        const GetStartedScreen(),
+                                transitionsBuilder:
+                                    (
+                                      context,
+                                      animation,
+                                      secondaryAnimation,
+                                      child,
+                                    ) {
+                                      return FadeThroughTransition(
+                                        animation: animation,
+                                        secondaryAnimation: secondaryAnimation,
+                                        child: child,
+                                      );
+                                    },
+                              ),
+                            );
                           }
                         },
                       ),
