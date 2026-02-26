@@ -1,3 +1,4 @@
+import 'package:expense_manager/features/splash/view/widgets/next_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -107,25 +108,86 @@ class Splash1Screen extends HookWidget {
                     Expanded(
                       child: Padding(
                         padding: const EdgeInsets.only(left: 20, right: 16),
-                        child: Text(
-                          contents[currentIndex.value],
-                          style: GoogleFonts.plusJakartaSans(
-                            color: Colors.white,
-                            fontSize: 36,
-                            fontWeight: FontWeight.w500,
+                        child: AnimatedSwitcher(
+                          duration: Duration(milliseconds: 300),
+                          child: Text(
+                            contents[currentIndex.value],
+                            key: ValueKey(contents[currentIndex.value]),
+                            style: GoogleFonts.plusJakartaSans(
+                              color: Colors.white,
+                              fontSize: 36,
+                              fontWeight: FontWeight.w500,
+                            ),
+                            softWrap: true,
                           ),
-                          softWrap: true,
                         ),
                       ),
                     ),
                   ],
                 ),
+                SizedBox(height: 20),
                 Row(
                   children: [
                     Expanded(
                       child: Padding(
                         padding: EdgeInsets.only(left: 20),
-                        child: Text(descriptions[currentIndex.value]),
+                        child: AnimatedSwitcher(
+                          duration: Duration(milliseconds: 400),
+                          child: Align(
+                            alignment: Alignment.centerLeft,
+                            child: Text(
+                              descriptions[currentIndex.value],
+                              key: ValueKey(descriptions[currentIndex.value]),
+                              style: GoogleFonts.plusJakartaSans(
+                                color: Colors.white.withOpacity(0.4),
+                                fontSize: 20,
+                              ),
+                              softWrap: true,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+                SizedBox(height: 20),
+                Row(
+                  children: [
+                    if (currentIndex.value != 0)
+                      GestureDetector(
+                        onTap: () {
+                          if (currentIndex.value > 0) {
+                            currentIndex.value--;
+                          }
+                        },
+                        child: Container(
+                          decoration: BoxDecoration(
+                            shape: BoxShape.circle,
+                            border: Border.all(color: Colors.white, width: 1.5),
+                          ),
+                          height: 60,
+                          width: 60,
+                          margin: EdgeInsets.only(left: 20),
+                          child: Center(
+                            child: Icon(
+                              Icons.arrow_back_rounded,
+                              color: Colors.white,
+                              size: 32,
+                            ),
+                          ),
+                        ),
+                      ),
+                    Expanded(
+                      child: NextButton(
+                        text: "Next",
+                        width: currentIndex.value == 0
+                            ? MediaQuery.of(context).size.width
+                            : 300,
+                        onTap: () {
+                          if (currentIndex.value < 2) {
+                            currentIndex.value++;
+                          }
+                        },
                       ),
                     ),
                   ],
