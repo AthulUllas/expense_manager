@@ -42,6 +42,7 @@ dependencies:
   http: ^1.6.0
   animations: ^2.1.1
   google_fonts: ^8.0.2
+  flutter_hooks: ^0.21.3+1
 
 dev_dependencies:
   flutter_test:
