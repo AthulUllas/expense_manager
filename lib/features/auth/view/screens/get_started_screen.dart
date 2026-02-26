@@ -1,3 +1,7 @@
+import 'package:animations/animations.dart';
+import 'package:expense_manager/features/auth/repository/auth_repository.dart';
+import 'package:expense_manager/features/auth/service/auth_service.dart';
+import 'package:expense_manager/features/auth/view/screens/verify_otp_screen.dart';
 import 'package:expense_manager/features/splash/view/widgets/next_button.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -7,6 +11,7 @@ class GetStartedScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final phoneCntrllr = TextEditingController();
     return Scaffold(
       backgroundColor: Color.fromARGB(255, 18, 18, 18),
       body: Column(
@@ -57,6 +62,9 @@ class GetStartedScreen extends StatelessWidget {
             margin: EdgeInsets.symmetric(horizontal: 20),
             child: Center(
               child: TextField(
+                controller: phoneCntrllr,
+                keyboardType: TextInputType.number,
+                style: TextStyle(color: Colors.white, fontSize: 24),
                 decoration: InputDecoration(
                   border: InputBorder.none,
                   hintText: "Phone",
@@ -80,7 +88,32 @@ class GetStartedScreen extends StatelessWidget {
           NextButton(
             text: "Continue",
             width: MediaQuery.of(context).size.width,
-            onTap: () {},
+            onTap: () async {
+              if (phoneCntrllr.text.length == 10) {
+                final repository = AuthRepository(AuthService());
+                final number = "+91${phoneCntrllr.text.trim()}";
+                final sendOtp = await repository.sendOtp(number);
+                if (sendOtp.otp.isNotEmpty) {
+                  Navigator.of(context).push(
+                    PageRouteBuilder(
+                      pageBuilder: (context, animation, secondaryAnimation) =>
+                          VerifyOtpScreen(
+                            phoneNumber: number,
+                            responseModel: sendOtp,
+                          ),
+                      transitionsBuilder:
+                          (context, animation, secondaryAnimation, child) {
+                            return FadeThroughTransition(
+                              animation: animation,
+                              secondaryAnimation: secondaryAnimation,
+                              child: child,
+                            );
+                          },
+                    ),
+                  );
+                }
+              }
+            },
           ),
         ],
       ),

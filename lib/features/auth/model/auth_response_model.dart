@@ -3,14 +3,14 @@ class AuthResponseModel {
   final String otp;
   final bool userExists;
   final String? nickname;
-  final String token;
+  final String? token;
 
   AuthResponseModel({
     required this.status,
     required this.otp,
     required this.userExists,
-    required this.nickname,
-    required this.token,
+    this.nickname,
+    this.token,
   });
 
   factory AuthResponseModel.fromJson(Map<String, dynamic> json) {

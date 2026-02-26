@@ -1,13 +1,14 @@
 import 'dart:convert';
 import 'package:expense_manager/features/auth/model/auth_response_model.dart';
 import 'package:expense_manager/features/auth/model/create_account_response_model.dart';
+import 'package:flutter/rendering.dart';
 import 'package:http/http.dart' as http;
 
 class AuthService {
   static const String baseUrl = "https://appskilltest.zybotech.in";
 
   Future<AuthResponseModel> sendOtp(String phone) async {
-    final url = Uri.parse("$baseUrl/auth/send-otp");
+    final url = Uri.parse("$baseUrl/auth/send-otp/");
 
     try {
       final response = await http.post(
@@ -21,6 +22,13 @@ class AuthService {
 
         return AuthResponseModel.fromJson(decoded);
       } else {
+        debugPrint(
+          "Status Code : ---------------------${response.statusCode}--------------------",
+        );
+        debugPrint(
+          "Status Code : ---------------------${response.body}------------------------",
+        );
+
         throw Exception("Failed to send OTP: ${response.body}");
       }
     } catch (e) {
