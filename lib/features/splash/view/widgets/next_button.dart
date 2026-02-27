@@ -17,7 +17,7 @@ class NextButton extends StatelessWidget {
     return GestureDetector(
       onTap: onTap,
       child: AnimatedContainer(
-        duration: Duration(milliseconds: 200),
+        duration: Duration(seconds: 2),
         decoration: BoxDecoration(
           color: Color.fromARGB(255, 50, 46, 203),
           borderRadius: BorderRadius.circular(10),

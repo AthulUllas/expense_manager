@@ -50,7 +50,7 @@ class Splash1Screen extends HookWidget {
                       ),
                       child: Center(
                         child: Text(
-                          "SKIP",
+                          currentIndex.value < 2 ? "SKIP" : "",
                           style: GoogleFonts.anekLatin(
                             color: Colors.white,
                             fontSize: 20,
@@ -181,7 +181,7 @@ class Splash1Screen extends HookWidget {
                       ),
                     Expanded(
                       child: NextButton(
-                        text: "Next",
+                        text: currentIndex.value < 2 ? "Next" : "Get Started",
                         width: currentIndex.value == 0
                             ? MediaQuery.of(context).size.width
                             : 300,

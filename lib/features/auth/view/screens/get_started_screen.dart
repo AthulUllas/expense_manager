@@ -92,13 +92,15 @@ class GetStartedScreen extends StatelessWidget {
               if (phoneCntrllr.text.length == 10) {
                 final repository = AuthRepository(AuthService());
                 final number = "+91${phoneCntrllr.text.trim()}";
+                final numberNoCode = number.substring(3);
                 final sendOtp = await repository.sendOtp(number);
                 if (sendOtp.otp.isNotEmpty) {
+                  debugPrint(sendOtp.otp);
                   Navigator.of(context).push(
                     PageRouteBuilder(
                       pageBuilder: (context, animation, secondaryAnimation) =>
                           VerifyOtpScreen(
-                            phoneNumber: number,
+                            phoneNumber: numberNoCode,
                             responseModel: sendOtp,
                           ),
                       transitionsBuilder:
